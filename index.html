@@ -2015,18 +2015,18 @@
       const actionsHtml = content.actions.map((a, i) => `
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:22px; border-radius:12px; overflow:hidden; border:1px solid #E2E8F0; background:#FFFFFF;">
           <tr>
-            <td class="action-banner" style="background:linear-gradient(135deg,#072BDE 0%,#1E90FF 100%); padding:18px 22px;">
+            <td class="action-banner" bgcolor="#072BDE" style="background-color:#072BDE; padding:18px 22px;">
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                 <tr>
                   <td valign="middle" style="width:46px;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                       <tr>
-                        <td align="center" valign="middle" style="background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.5); border-radius:50%; width:38px; height:38px; color:#FFFFFF; font-weight:800; font-size:15px; font-family:Helvetica,Arial,sans-serif;">0${i + 1}</td>
+                        <td align="center" valign="middle" bgcolor="#1E90FF" style="background-color:#1E90FF; border:1.5px solid #FFFFFF; border-radius:50%; width:38px; height:38px; color:#FFFFFF; font-weight:800; font-size:15px; font-family:Helvetica,Arial,sans-serif;">0${i + 1}</td>
                       </tr>
                     </table>
                   </td>
                   <td valign="middle" style="padding-left:14px;">
-                    <div style="font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:3px;">Acción ${i + 1} de 3</div>
+                    <div style="font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#A8C5FF; margin-bottom:3px;">Acción ${i + 1} de 3</div>
                     <div class="action-title" style="font-size:17px; font-weight:700; color:#FFFFFF; letter-spacing:-0.01em; line-height:1.25;">${a.title}</div>
                   </td>
                 </tr>
@@ -2048,7 +2048,7 @@
               </ol>
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
                 <tr>
-                  <td class="action-firststep" style="background:linear-gradient(90deg, rgba(16,185,129,0.10) 0%, rgba(16,185,129,0.02) 100%); border-left:4px solid #10B981; border-radius:6px; padding:14px 16px;">
+                  <td class="action-firststep" bgcolor="#ECFDF5" style="background-color:#ECFDF5; border-left:4px solid #10B981; border-radius:6px; padding:14px 16px;">
                     <div style="font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:#059669; margin-bottom:4px;">▶ Primer paso esta semana</div>
                     <div class="firststep-text" style="font-size:14px; color:#0F172A; font-weight:500; line-height:1.5;">${a.firstStep}</div>
                   </td>
