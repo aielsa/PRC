@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Reality Check IA — Tu diagnóstico de madurez de IA en 3 minutos</title>
+  <meta name="description" content="Diagnóstico personalizado de madurez de IA para tu empresa. 12 preguntas. 3 minutos. Powered by PRC Services Corporation + The AI Strategist.">
+  <meta name="theme-color" content="#0A0E1F">
+
+  <meta property="og:title" content="Reality Check IA — Tu diagnóstico en 3 minutos">
+  <meta property="og:description" content="¿Tu empresa está lista para adoptar IA? Diagnóstico personalizado en 3 minutos.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       RESET + BASE
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    input { font-family: inherit; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* =========================================================
+       DESIGN TOKENS
+       ========================================================= */
+    :root {
+      --prc-blue: #072BDE;
+      --prc-blue-bright: #1E90FF;
+      --prc-blue-deep: #0518A0;
+      --prc-blue-glow: rgba(30, 144, 255, 0.4);
+
+      --bg-dark: #060912;
+      --bg-elev: #0E1428;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --bg-card-hover: rgba(255, 255, 255, 0.07);
+      --bg-card-active: rgba(30, 144, 255, 0.12);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --border-active: rgba(30, 144, 255, 0.6);
+
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.72);
+      --text-muted: rgba(255, 255, 255, 0.48);
+
+      --rojo: #EF4444;
+      --rojo-glow: rgba(239, 68, 68, 0.35);
+      --amarillo: #F59E0B;
+      --amarillo-glow: rgba(245, 158, 11, 0.35);
+      --verde: #10B981;
+      --verde-glow: rgba(16, 185, 129, 0.35);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+
+      --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* =========================================================
+       BACKGROUND ATMOSPHERE
+       ========================================================= */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(7, 43, 222, 0.5), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(30, 144, 255, 0.28), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(7, 43, 222, 0.18), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientBreathe 9s ease-in-out infinite;
+      will-change: transform, opacity;
+      transform-origin: center center;
+    }
+    @keyframes ambientBreathe {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+      }
+      33% {
+        opacity: 0.55;
+        transform: scale(1.08) translate(-2%, 1%);
+      }
+      66% {
+        opacity: 0.85;
+        transform: scale(1.05) translate(2%, -1%);
+      }
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent 80%);
+    }
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .container--narrow { max-width: 560px; }
+    .container--wide { max-width: 880px; }
+
+    /* =========================================================
+       TOP BAR
+       ========================================================= */
+    .topbar {
+      padding: 28px 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar__brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .topbar__logo {
+      height: 56px;
+      width: auto;
+      filter: drop-shadow(0 0 0 rgba(30, 144, 255, 0));
+      animation: logoGlow 5.5s ease-in-out infinite;
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+    .topbar__logo:hover {
+      transform: translateY(-1px);
+      filter: drop-shadow(0 0 32px rgba(30, 144, 255, 0.55));
+    }
+    @keyframes logoGlow {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 0 rgba(30, 144, 255, 0))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 22px rgba(30, 144, 255, 0.45))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      }
+    }
+    .topbar__divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border-strong);
+    }
+    .topbar__strategist {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .topbar__strategist em {
+      color: var(--prc-blue-bright);
+      font-style: normal;
+    }
+    .topbar__progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    @media (max-width: 540px) {
+      .topbar__strategist { display: none; }
+      .topbar__divider { display: none; }
+      .topbar { padding: 22px 0 18px; }
+      .topbar__logo { height: 44px; }
+    }
+
+    /* =========================================================
+       PROGRESS BAR
+       ========================================================= */
+    .progress {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress__bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--prc-blue), var(--prc-blue-bright));
+      border-radius: 3px;
+      transform-origin: left;
+      transition: width var(--transition);
+      box-shadow: 0 0 12px var(--prc-blue-glow);
+    }
+    .progress-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .progress-meta__signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(30, 144, 255, 0.08);
+      border: 1px solid rgba(30, 144, 255, 0.25);
+      border-radius: 100px;
+      color: var(--prc-blue-bright);
+      letter-spacing: 0.04em;
+      text-transform: none;
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       SCREENS
+       ========================================================= */
+    .screen {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.4s ease;
+    }
+    .screen.is-active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================
+       LANDING SCREEN
+       ========================================================= */
+    .landing {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 0 60px;
+    }
+    .landing__brand {
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .landing__logo {
+      height: clamp(96px, 13vw, 150px);
+      width: auto;
+      filter:
+        drop-shadow(0 0 0 rgba(30, 144, 255, 0))
+        drop-shadow(0 8px 28px rgba(0, 0, 0, 0.5));
+      animation: heroLogoGlow 4s ease-in-out infinite;
+      transition: transform 0.4s ease;
+    }
+    .landing__logo:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+    @keyframes heroLogoGlow {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 12px rgba(30, 144, 255, 0.15))
+          drop-shadow(0 8px 28px rgba(0, 0, 0, 0.5));
+        transform: translateY(0);
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 48px rgba(30, 144, 255, 0.65))
+          drop-shadow(0 8px 28px rgba(0, 0, 0, 0.5));
+        transform: translateY(-3px);
+      }
+    }
+    /* Hide topbar on landing — the hero has its own big logo */
+    body:has(#screen-landing.is-active) .topbar {
+      display: none;
+    }
+    .landing__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      align-self: flex-start;
+      padding: 8px 14px;
+      background: rgba(30, 144, 255, 0.08);
+      border: 1px solid rgba(30, 144, 255, 0.25);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--prc-blue-bright);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .landing__badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--prc-blue-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--prc-blue-bright);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .landing__title {
+      font-size: clamp(36px, 7vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .landing__title span {
+      background: linear-gradient(
+        100deg,
+        var(--prc-blue-bright) 0%,
+        #FFFFFF 35%,
+        #FFFFFF 65%,
+        var(--prc-blue-bright) 100%
+      );
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: titleShimmer 6s ease-in-out infinite;
+    }
+    @keyframes titleShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .landing__lede {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+    .landing__lede strong { color: var(--text-primary); font-weight: 600; }
+    .landing__features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 44px;
+      max-width: 720px;
+    }
+    .landing__feature {
+      position: relative;
+      padding: 26px 22px 24px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+    .landing__feature::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(30, 144, 255, 0.55), transparent);
+      opacity: 0.7;
+      transition: opacity var(--transition), left var(--transition), right var(--transition);
+    }
+    .landing__feature::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30, 144, 255, 0.12), transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .landing__feature:hover {
+      transform: translateY(-3px);
+      border-color: rgba(30, 144, 255, 0.32);
+      background:
+        linear-gradient(135deg, rgba(30, 144, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    }
+    .landing__feature:hover::before {
+      opacity: 1;
+      left: 0;
+      right: 0;
+    }
+    .landing__feature:hover::after { opacity: 1; }
+
+    .landing__feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(30, 144, 255, 0.18), rgba(7, 43, 222, 0.1));
+      border: 1px solid rgba(30, 144, 255, 0.28);
+      color: var(--prc-blue-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 4px 16px rgba(7, 43, 222, 0.18);
+      flex-shrink: 0;
+    }
+    .landing__feature-icon svg {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 6px rgba(30, 144, 255, 0.4));
+    }
+
+    .landing__feature-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .landing__feature-num {
+      font-size: clamp(32px, 4.5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--prc-blue-bright) 110%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .landing__feature-num span {
+      font-size: 0.55em;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-left: 2px;
+      vertical-align: 2px;
+    }
+    .landing__feature-text {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      letter-spacing: -0.005em;
+    }
+    .landing__privacy {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 24px;
+      max-width: 540px;
+    }
+
+    /* =========================================================
+       BUTTONS
+       ========================================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+      min-height: 56px;
+    }
+    .btn--primary {
+      background: linear-gradient(135deg, var(--prc-blue), var(--prc-blue-bright));
+      color: white;
+      box-shadow:
+        0 8px 24px rgba(7, 43, 222, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn--primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    .btn--primary:hover::before { transform: translateX(100%); }
+    .btn--primary:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 12px 32px rgba(7, 43, 222, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    }
+    .btn--primary:active { transform: translateY(0); }
+    .btn--primary:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+    }
+    .btn--ghost:hover {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+    .btn--ghost:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .btn--full { width: 100%; }
+    .btn__arrow {
+      transition: transform var(--transition-fast);
+    }
+    .btn:hover .btn__arrow { transform: translateX(3px); }
+
+    /* =========================================================
+       QUIZ SCREEN
+       ========================================================= */
+    .quiz {
+      padding: 16px 0 40px;
+    }
+    .quiz__question {
+      font-size: clamp(22px, 3.6vw, 30px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+    .quiz__options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .option {
+      width: 100%;
+      text-align: left;
+      padding: 20px 22px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.45;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      position: relative;
+    }
+    .option:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .option.is-selected {
+      background: var(--bg-card-active);
+      border-color: var(--border-active);
+      color: var(--text-primary);
+      box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.12);
+    }
+    .option__radio {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border-strong);
+      transition: all var(--transition-fast);
+      margin-top: 2px;
+      position: relative;
+    }
+    .option.is-selected .option__radio {
+      border-color: var(--prc-blue-bright);
+      background: var(--prc-blue-bright);
+    }
+    .option.is-selected .option__radio::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      background: white;
+      border-radius: 50%;
+    }
+    .option__text { flex: 1; }
+    .quiz__nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .quiz__nav .btn--ghost { flex: 0 0 auto; }
+    .quiz__nav .btn--primary { flex: 1; }
+
+    /* =========================================================
+       FORM SCREEN
+       ========================================================= */
+    .form {
+      padding: 16px 0 60px;
+    }
+    .form__intro {
+      margin-bottom: 36px;
+    }
+    .form__eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--prc-blue-bright);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .form__title {
+      font-size: clamp(26px, 4.5vw, 36px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .form__lede {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+    }
+    .form__fields {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
+    }
+    .field__input {
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 16px;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(8px);
+      width: 100%;
+      outline: none;
+    }
+    .field__input::placeholder { color: var(--text-muted); }
+    .field__input:hover { border-color: var(--border-strong); }
+    .field__input:focus {
+      border-color: var(--border-active);
+      background: var(--bg-card-hover);
+      box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.12);
+    }
+    .field__error {
+      font-size: 13px;
+      color: var(--rojo);
+      display: none;
+    }
+    .field.is-error .field__input {
+      border-color: var(--rojo);
+    }
+    .field.is-error .field__error { display: block; }
+    .form__consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .form__consent input {
+      flex-shrink: 0;
+      margin-top: 2px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--prc-blue-bright);
+    }
+    .form__submit-error {
+      display: none;
+      padding: 14px 18px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-md);
+      color: var(--rojo);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .form__submit-error.is-visible { display: block; }
+
+    /* =========================================================
+       RESULTS SCREEN
+       ========================================================= */
+    .results {
+      padding: 24px 0 60px;
+    }
+    .results__hero {
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .score-ring {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 28px;
+    }
+    .score-ring svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .score-ring__track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 10;
+    }
+    .score-ring__fill {
+      fill: none;
+      stroke: url(#scoreGradient);
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: drop-shadow(0 0 12px var(--prc-blue-glow));
+    }
+    .score-ring__inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .score-ring__number {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+    .score-ring__total {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .level-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .level-rojo {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--rojo);
+    }
+    .level-rojo::before { background: var(--rojo); box-shadow: 0 0 10px var(--rojo); }
+    .level-amarillo {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--amarillo);
+    }
+    .level-amarillo::before { background: var(--amarillo); box-shadow: 0 0 10px var(--amarillo); }
+    .level-verde {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--verde);
+    }
+    .level-verde::before { background: var(--verde); box-shadow: 0 0 10px var(--verde); }
+
+    .results__headline {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .results__message {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .results__section {
+      margin-top: 48px;
+    }
+    .results__section-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .signals {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .signal {
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(8px);
+    }
+    .signal.is-weakest {
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.04);
+    }
+    .signal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .signal__name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .signal__weak-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amarillo);
+      border-radius: 4px;
+    }
+    .signal__score {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .signal__score span { color: var(--text-muted); font-weight: 500; font-size: 13px; }
+    .signal__bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .signal__bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .signal__bar-fill--rojo { background: linear-gradient(90deg, var(--rojo), #f87171); }
+    .signal__bar-fill--amarillo { background: linear-gradient(90deg, var(--amarillo), #fbbf24); }
+    .signal__bar-fill--verde { background: linear-gradient(90deg, var(--verde), #34d399); }
+
+    .actions-card {
+      margin-top: 16px;
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(7, 43, 222, 0.12), rgba(30, 144, 255, 0.04));
+      border: 1px solid rgba(30, 144, 255, 0.2);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(8px);
+    }
+    .actions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      list-style: none;
+    }
+    .action {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .action + .action {
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .action__num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--prc-blue), var(--prc-blue-bright));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 12px rgba(7, 43, 222, 0.4);
+    }
+    .action__body { flex: 1; padding-top: 4px; }
+    .action__title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .action__desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .action__steps-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .action__steps {
+      list-style: none;
+      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-left: 0;
+    }
+    .action__steps li {
+      counter-increment: step;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      padding-left: 28px;
+      position: relative;
+    }
+    .action__steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 20px;
+      height: 20px;
+      background: rgba(30, 144, 255, 0.12);
+      border: 1px solid rgba(30, 144, 255, 0.28);
+      color: var(--prc-blue-bright);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .action__first {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(30, 144, 255, 0.08);
+      border-left: 3px solid var(--prc-blue-bright);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+    .action__first-label {
+      font-weight: 700;
+      color: var(--prc-blue-bright);
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+      font-size: 11px;
+      text-transform: uppercase;
+      padding-top: 1px;
+    }
+
+    .next-step {
+      margin-top: 32px;
+      padding: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(8px);
+      text-align: center;
+    }
+    .next-step__title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .next-step__desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 22px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .results__email-note {
+      margin-top: 32px;
+      padding: 18px 22px;
+      background: rgba(30, 144, 255, 0.06);
+      border: 1px solid rgba(30, 144, 255, 0.18);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .results__email-note svg {
+      flex-shrink: 0;
+      color: var(--prc-blue-bright);
+      margin-top: 2px;
+    }
+    .results__email-note strong { color: var(--text-primary); font-weight: 600; }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    .footer {
+      padding: 32px 0 40px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer__brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer__powered {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer__logo {
+      height: 38px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+    .footer__tagline {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    @media (max-width: 540px) {
+      .footer__inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    /* =========================================================
+       LOADING STATE
+       ========================================================= */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* =========================================================
+       UTILS
+       ========================================================= */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+      white-space: nowrap; border: 0;
+    }
+    .hidden { display: none !important; }
+
+    /* =========================================================
+       MEDIA QUERIES — MOBILE
+       ========================================================= */
+
+    /* Tablets & medium phones */
+    @media (max-width: 720px) {
+      .container { padding: 0 22px; }
+      .landing__features { gap: 10px; }
+      .results__hero { margin-bottom: 36px; }
+    }
+
+    /* Phones (≤ 540px) */
+    @media (max-width: 540px) {
+      .container { padding: 0 20px; }
+
+      /* Landing */
+      .landing { padding: 16px 0 48px; }
+      .landing__brand { margin-bottom: 26px; }
+      .landing__badge {
+        padding: 7px 12px;
+        font-size: 11px;
+        margin-bottom: 22px;
+        letter-spacing: 0.05em;
+      }
+      .landing__title { margin-bottom: 16px; }
+      .landing__lede { font-size: 15.5px; margin-bottom: 28px; }
+      .landing__features {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+      .landing__feature {
+        flex-direction: row;
+        align-items: center;
+        padding: 16px 18px;
+        gap: 16px;
+      }
+      .landing__feature-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+      }
+      .landing__feature-icon svg { width: 20px; height: 20px; }
+      .landing__feature-content {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .landing__feature-num { font-size: 26px; }
+      .landing__feature-num span { font-size: 0.6em; }
+      .landing__feature-text { font-size: 13px; }
+      .landing__privacy { font-size: 12.5px; margin-top: 20px; }
+
+      /* Buttons */
+      .btn {
+        padding: 16px 22px;
+        font-size: 15px;
+        min-height: 52px;
+      }
+
+      /* Quiz */
+      .quiz { padding: 8px 0 36px; }
+      .progress-meta { margin-bottom: 22px; font-size: 11px; gap: 8px; }
+      .progress-meta__signal { padding: 5px 10px; font-size: 10.5px; }
+      .quiz__question { margin-bottom: 24px; }
+      .quiz__options { gap: 10px; margin-bottom: 24px; }
+      .option {
+        padding: 16px 16px;
+        font-size: 14.5px;
+        gap: 12px;
+        line-height: 1.4;
+      }
+      .option__radio { width: 20px; height: 20px; }
+      .quiz__nav { gap: 10px; }
+      .quiz__nav .btn--ghost { padding: 14px 16px; min-height: 52px; }
+
+      /* Form */
+      .form { padding: 8px 0 48px; }
+      .form__intro { margin-bottom: 28px; }
+      .form__fields { gap: 16px; margin-bottom: 24px; }
+      .field__label { font-size: 12.5px; }
+      .field__input {
+        padding: 14px 16px;
+        font-size: 16px; /* keep 16px to prevent iOS zoom */
+      }
+      .form__consent { font-size: 12.5px; margin-bottom: 20px; gap: 10px; }
+
+      /* Results */
+      .results { padding: 16px 0 48px; }
+      .score-ring { width: 180px; height: 180px; margin-bottom: 22px; }
+      .score-ring__number { font-size: 52px; }
+      .score-ring__total { font-size: 13px; }
+      .level-badge {
+        padding: 7px 14px;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        margin-bottom: 16px;
+      }
+      .results__headline { margin-bottom: 14px; }
+      .results__message { font-size: 15px; line-height: 1.55; }
+      .results__section { margin-top: 36px; }
+      .results__section-title { margin-bottom: 14px; font-size: 11px; }
+
+      /* Signal cards */
+      .signals { gap: 12px; }
+      .signal { padding: 16px 18px; }
+      .signal__head { flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+      .signal__name {
+        font-size: 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .signal__weak-tag { font-size: 9.5px; padding: 3px 7px; }
+      .signal__score { font-size: 17px; }
+
+      /* Actions */
+      .actions-card, .next-step { padding: 22px 20px; }
+      .actions-list { gap: 24px; }
+      .action + .action { padding-top: 24px; }
+      .action { gap: 12px; }
+      .action__num {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+      .action__title { font-size: 15px; }
+      .action__desc { font-size: 13.5px; margin-bottom: 12px; }
+      .action__steps { gap: 8px; margin-bottom: 12px; }
+      .action__steps li {
+        font-size: 13px;
+        padding-left: 26px;
+        line-height: 1.5;
+      }
+      .action__steps li::before {
+        width: 18px;
+        height: 18px;
+        font-size: 9.5px;
+      }
+      .action__first {
+        flex-direction: column;
+        gap: 4px;
+        padding: 11px 13px;
+        font-size: 12.5px;
+      }
+      .action__first-label { font-size: 10px; }
+
+      /* Next step */
+      .next-step__title { font-size: 18px; }
+      .next-step__desc { font-size: 14px; margin-bottom: 18px; }
+
+      /* Email note */
+      .results__email-note { padding: 14px 16px; font-size: 13px; gap: 10px; }
+
+      /* Footer */
+      .footer { padding: 24px 0 32px; }
+      .footer__brand { gap: 12px; }
+      .footer__logo { height: 32px; }
+      .footer__powered { font-size: 10px; }
+      .footer__tagline { font-size: 11px; }
+    }
+
+    /* Small phones (iPhone SE, ≤ 380px) */
+    @media (max-width: 380px) {
+      .container { padding: 0 16px; }
+      .landing__title { font-size: 32px !important; }
+      .landing__lede { font-size: 14.5px; }
+      .quiz__question { font-size: 19px !important; }
+      .progress-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .score-ring { width: 160px; height: 160px; }
+      .score-ring__number { font-size: 46px; }
+      .results__headline { font-size: 22px !important; }
+      .form__title { font-size: 24px !important; }
+      .actions-card, .next-step { padding: 20px 16px; }
+    }
+
+    /* Landscape phones — keep landing scrollable */
+    @media (max-height: 600px) and (orientation: landscape) and (max-width: 900px) {
+      .landing {
+        justify-content: flex-start;
+        padding: 24px 0 40px;
+      }
+      .landing__brand { margin-bottom: 20px; }
+      .landing__logo { height: 80px; }
+      .landing__features { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="app">
+
+    <!-- ============================================================
+         TOP BAR (visible en todas las pantallas)
+         ============================================================ -->
+    <header class="topbar container">
+      <div class="topbar__brand">
+        <img src="assets/logo-prc-white.svg" alt="PRC Services Corporation" class="topbar__logo" />
+      </div>
+      <div class="topbar__progress" id="topbarProgress">RC IA · 2026</div>
+    </header>
+
+    <!-- ============================================================
+         SCREEN 1 — LANDING
+         ============================================================ -->
+    <section class="screen is-active" id="screen-landing">
+      <div class="landing container">
+        <div class="landing__brand">
+          <img src="assets/logo-prc-white.svg" alt="PRC Services Corporation" class="landing__logo" />
+        </div>
+
+        <div class="landing__badge">CIO &amp; IT Leadership Conference 2026</div>
+
+        <h1 class="landing__title">
+          El <span>Reality Check</span> de IA<br/>de tu empresa.
+        </h1>
+
+        <p class="landing__lede">
+          Diagnóstico personalizado para saber si tu empresa está lista para <strong>adoptar inteligencia artificial</strong>. Vas a recibir tu score, tu eslabón más débil y un plan de acción específico para tu nivel.
+        </p>
+
+        <div class="landing__features">
+          <div class="landing__feature">
+            <div class="landing__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                <rect x="9" y="3" width="6" height="4" rx="1"/>
+                <path d="M9 12h.01"/>
+                <path d="M9 16h.01"/>
+                <path d="M13 12h3"/>
+                <path d="M13 16h3"/>
+              </svg>
+            </div>
+            <div class="landing__feature-content">
+              <div class="landing__feature-num">12</div>
+              <div class="landing__feature-text">Preguntas en 4 dimensiones</div>
+            </div>
+          </div>
+
+          <div class="landing__feature">
+            <div class="landing__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="landing__feature-content">
+              <div class="landing__feature-num">3 <span>min</span></div>
+              <div class="landing__feature-text">De principio a fin</div>
+            </div>
+          </div>
+
+          <div class="landing__feature">
+            <div class="landing__feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="landing__feature-content">
+              <div class="landing__feature-num">100<span>%</span></div>
+              <div class="landing__feature-text">Confidencial · Por email</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn--primary" id="startBtn">
+          Empezar mi Reality Check
+          <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <p class="landing__privacy">
+          Tus datos están seguros. Solo recibirás tu diagnóstico y, si lo permites, recursos relacionados de PRC Services Corporation.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 2 — QUIZ
+         ============================================================ -->
+    <section class="screen" id="screen-quiz">
+      <div class="quiz container">
+        <div class="progress-meta">
+          <div>
+            <span id="questionCounter">Pregunta 1 de 12</span>
+          </div>
+          <div class="progress-meta__signal" id="signalPill">Procesos Mapeados</div>
+        </div>
+        <div class="progress">
+          <div class="progress__bar" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div style="height: 24px"></div>
+
+        <h2 class="quiz__question" id="questionText"><!-- Renderizado dinámicamente --></h2>
+
+        <div class="quiz__options" id="optionsContainer">
+          <!-- Renderizado dinámicamente -->
+        </div>
+
+        <div class="quiz__nav">
+          <button class="btn btn--ghost" id="backBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Atrás
+          </button>
+          <button class="btn btn--primary" id="nextBtn" disabled>
+            <span id="nextBtnLabel">Siguiente</span>
+            <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 3 — FORM
+         ============================================================ -->
+    <section class="screen" id="screen-form">
+      <div class="form container container--narrow">
+        <div class="form__intro">
+          <div class="form__eyebrow">Último paso</div>
+          <h2 class="form__title">¿A dónde te enviamos tu Reality Check?</h2>
+          <p class="form__lede">
+            Tu diagnóstico personalizado, breakdown por dimensión y plan de acción te llegan al correo en minutos.
+          </p>
+        </div>
+
+        <form class="form__fields" id="leadForm" novalidate>
+          <div class="field" data-field="nombre">
+            <label class="field__label" for="nombre">Nombre completo</label>
+            <input class="field__input" type="text" id="nombre" name="nombre" placeholder="Ej. María Rodríguez" autocomplete="name" required>
+            <div class="field__error">Por favor, escribe tu nombre.</div>
+          </div>
+
+          <div class="field" data-field="email">
+            <label class="field__label" for="email">Correo electrónico</label>
+            <input class="field__input" type="email" id="email" name="email" placeholder="tu@empresa.com" autocomplete="email" required>
+            <div class="field__error">Necesitamos un correo válido para enviarte los resultados.</div>
+          </div>
+
+          <div class="field" data-field="empresa">
+            <label class="field__label" for="empresa">Empresa</label>
+            <input class="field__input" type="text" id="empresa" name="empresa" placeholder="Ej. Acme Corp" autocomplete="organization" required>
+            <div class="field__error">Indícanos el nombre de tu empresa.</div>
+          </div>
+
+          <div class="field" data-field="rol">
+            <label class="field__label" for="rol">Rol o posición</label>
+            <input class="field__input" type="text" id="rol" name="rol" placeholder="Ej. CIO, IT Director, COO" autocomplete="organization-title" required>
+            <div class="field__error">¿Cuál es tu rol en la empresa?</div>
+          </div>
+
+          <label class="form__consent">
+            <input type="checkbox" id="consent" checked>
+            <span>Acepto recibir mi diagnóstico y recursos relacionados de PRC Services Corporation. Puedes darte de baja en cualquier momento.</span>
+          </label>
+
+          <div class="form__submit-error" id="submitError">
+            Hubo un problema al enviar tu información. Intenta de nuevo o contáctanos.
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full" id="submitBtn">
+            <span id="submitBtnLabel">Ver mi resultado</span>
+            <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 4 — RESULTS
+         ============================================================ -->
+    <section class="screen" id="screen-results">
+      <div class="results container">
+        <div class="results__hero">
+          <div class="score-ring">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#072BDE" />
+                  <stop offset="100%" stop-color="#1E90FF" />
+                </linearGradient>
+              </defs>
+              <circle class="score-ring__track" cx="100" cy="100" r="90"></circle>
+              <circle class="score-ring__fill" cx="100" cy="100" r="90"
+                stroke-dasharray="565.48" stroke-dashoffset="565.48" id="scoreFill"></circle>
+            </svg>
+            <div class="score-ring__inner">
+              <div class="score-ring__number" id="scoreNumber">0</div>
+              <div class="score-ring__total">de 100</div>
+            </div>
+          </div>
+
+          <div class="level-badge" id="levelBadge">
+            <span id="levelText">NIVEL</span>
+          </div>
+
+          <h2 class="results__headline" id="resultsHeadline">Tu nivel de Reality Check</h2>
+          <p class="results__message" id="resultsMessage"></p>
+        </div>
+
+        <div class="results__section">
+          <div class="results__section-title">Tu desglose por área</div>
+          <div class="signals" id="signalsContainer">
+            <!-- Renderizado dinámicamente -->
+          </div>
+        </div>
+
+        <div class="results__section">
+          <div class="results__section-title">Las 3 acciones que necesitas tomar primero</div>
+          <div class="actions-card">
+            <ol class="actions-list" id="actionsList">
+              <!-- Renderizado dinámicamente -->
+            </ol>
+          </div>
+        </div>
+
+        <div class="next-step">
+          <div class="next-step__title">Tu siguiente paso</div>
+          <p class="next-step__desc" id="nextStepDesc"></p>
+          <a class="btn btn--primary" id="calendlyBtn" href="#" target="_blank" rel="noopener">
+            Agenda tu sesión de diagnóstico gratis
+            <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+
+        <div class="results__email-note">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <div>
+            <strong>También enviamos tu Reality Check a tu correo.</strong> Revisa tu bandeja en los próximos minutos. Si no llega, mira en spam.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="footer container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__powered">Powered by</span>
+          <img src="assets/logo-prc-white.svg" alt="PRC Services Corporation" class="footer__logo" />
+        </div>
+        <div class="footer__tagline">Knowledge · Experience · Leadership · Since 1973</div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    /* ============================================================
+       CONFIG — Editar aquí mañana cuando decidas backend
+       ============================================================ */
+    window.QUIZ_CONFIG = {
+      // Endpoint que recibe el lead. Make.com webhook conectado a Outlook + Sheets.
+      endpoint: 'https://hook.us1.make.com/k1d2l7d648rg2p2gwxv0q3w84lwgoq48',
+
+      // Link de Calendly para "Agenda tu sesión de diagnóstico gratis"
+      calendlyUrl: 'https://calendly.com/elsadelpino/diagnostico-prc',
+
+      // URL pública del logo PRC blanco (cambiar después del deploy a tu dominio real)
+      // Ej: 'https://realitycheck.elsadelpino.com/assets/logo-prc-white.png'
+      logoUrl: 'https://realitycheck.elsadelpino.com/assets/logo-prc-white.png',
+
+      // Origen para tracking ("CIO Conference 2026", etc.)
+      source: 'CIO Conference 2026'
+    };
+
+    /* ============================================================
+       QUIZ DATA
+       ============================================================ */
+    const QUESTIONS = [
+      // ÁREA 1 — PROCESOS MAPEADOS
+      { id: 1, signal: 'procesos', text: '¿Tienes documentado, paso por paso, cómo fluye un proceso clave de tu empresa?',
+        options: [
+          { text: 'No tenemos procesos documentados formalmente', points: 0 },
+          { text: 'Algunos están documentados pero desactualizados', points: 1 },
+          { text: 'Los procesos críticos están documentados y al día', points: 2 },
+          { text: 'Tenemos documentación viva con dueños asignados y revisión periódica', points: 3 }
+        ]},
+      { id: 2, signal: 'procesos', text: 'Si le pides a 5 personas distintas que dibujen un mismo proceso de tu empresa, ¿darían el mismo dibujo?',
+        options: [
+          { text: 'Cada cual haría lo suyo — todos diferentes', points: 0 },
+          { text: 'Habría diferencias importantes', points: 1 },
+          { text: 'Diferencias menores — la idea general coincide', points: 2 },
+          { text: 'Coincidirían exactamente', points: 3 }
+        ]},
+      { id: 3, signal: 'procesos', text: '¿Has identificado cuáles son los 3 procesos más repetitivos y costosos en tu organización?',
+        options: [
+          { text: 'No, no lo hemos analizado', points: 0 },
+          { text: 'Tenemos una idea pero sin datos', points: 1 },
+          { text: 'Sí, con datos básicos de tiempo y costo', points: 2 },
+          { text: 'Sí, con datos detallados y prioridad asignada', points: 3 }
+        ]},
+      // ÁREA 2 — PUNTOS DE IA IDENTIFICADOS
+      { id: 4, signal: 'puntos_ia', text: '¿Has nombrado pasos específicos donde la IA puede agregar valor inmediato en tu operación?',
+        options: [
+          { text: 'No, todavía estamos pensando dónde aplicarla', points: 0 },
+          { text: 'Tenemos una lista general sin priorizar', points: 1 },
+          { text: 'Sí, con casos de uso priorizados', points: 2 },
+          { text: 'Sí, y ya estamos pilotando 1+ casos en producción', points: 3 }
+        ]},
+      { id: 5, signal: 'puntos_ia', text: 'Para tareas que ya están automatizadas o asistidas con IA, ¿cada una tiene un dueño humano y supervisor asignado?',
+        options: [
+          { text: 'No usamos IA en tareas formales', points: 0 },
+          { text: 'La usamos pero sin dueños claros', points: 1 },
+          { text: 'Algunos casos tienen dueño, otros no', points: 2 },
+          { text: 'Cada herramienta tiene dueño con nombre y apellido', points: 3 }
+        ]},
+      { id: 6, signal: 'puntos_ia', text: '¿Tienes claridad sobre cuándo un agente puede decidir solo vs cuándo debe pedir aprobación humana?',
+        options: [
+          { text: 'No hemos definido esto formalmente', points: 0 },
+          { text: 'Lo dejamos al criterio de cada empleado', points: 1 },
+          { text: 'Tenemos guías generales por área', points: 2 },
+          { text: 'Tenemos políticas formales por nivel de riesgo', points: 3 }
+        ]},
+      // ÁREA 3 — INVERSIÓN EN ADIESTRAMIENTO
+      { id: 7, signal: 'adiestramiento', text: '¿Qué porcentaje de tu budget de training 2026 está específicamente asignado a IA?',
+        options: [
+          { text: '0% — no tenemos línea de IA', points: 0 },
+          { text: 'Entre 1% y 5%', points: 1 },
+          { text: 'Entre 6% y 15%', points: 2 },
+          { text: 'Más de 15%', points: 3 }
+        ]},
+      { id: 8, signal: 'adiestramiento', text: '¿Tu equipo ha completado algún programa formal hands-on de IA (no solo charlas o webinars)?',
+        options: [
+          { text: 'No, ninguno', points: 0 },
+          { text: 'Algunas personas por su cuenta', points: 1 },
+          { text: 'Un grupo selecto formalmente', points: 2 },
+          { text: 'Tenemos programa estructurado para todo el equipo', points: 3 }
+        ]},
+      { id: 9, signal: 'adiestramiento', text: '¿Cuántos empleados tienes inscritos en programas como AWS-PR, DDEC TechForce, o equivalentes?',
+        options: [
+          { text: 'Ninguno', points: 0 },
+          { text: '1–5 empleados', points: 1 },
+          { text: '6–25 empleados', points: 2 },
+          { text: 'Más de 25 (o programa activo de inscripción masiva)', points: 3 }
+        ]},
+      // ÁREA 4 — GOBERNANZA CON GUÍA EXTERNA
+      { id: 10, signal: 'gobernanza', text: '¿Tu empresa tiene una política formal de uso de IA, documentada y firmada por liderazgo?',
+        options: [
+          { text: 'No tenemos política', points: 0 },
+          { text: 'Bajamos un template — nadie lo ha firmado', points: 1 },
+          { text: 'Tenemos política firmada, parcialmente implementada', points: 2 },
+          { text: 'Política firmada, comunicada y revisada cada 90 días', points: 3 }
+        ]},
+      { id: 11, signal: 'gobernanza', text: '¿Tienes inventario de TODAS las herramientas de IA en uso en tu empresa, incluyendo cuentas personales de empleados?',
+        options: [
+          { text: 'No, sería difícil saberlo', points: 0 },
+          { text: 'Solo de las que TI gestiona oficialmente', points: 1 },
+          { text: 'Inventario formal pero probablemente incompleto', points: 2 },
+          { text: 'Inventario completo + auditoría regular de "shadow AI"', points: 3 }
+        ]},
+      { id: 12, signal: 'gobernanza', text: '¿Tienes acompañamiento externo (consultor, advisor, partner) para gobernanza y estrategia de IA?',
+        options: [
+          { text: 'No, lo manejamos internamente', points: 0 },
+          { text: 'Hemos contratado servicios puntuales sin continuidad', points: 1 },
+          { text: 'Tenemos relación pero no formalizada', points: 2 },
+          { text: 'Tenemos partner externo con contrato activo', points: 3 }
+        ]}
+    ];
+
+    const SIGNAL_NAMES = {
+      procesos: 'Procesos Mapeados',
+      puntos_ia: 'Puntos de IA Identificados',
+      adiestramiento: 'Inversión en Adiestramiento',
+      gobernanza: 'Gobernanza con Guía Externa'
+    };
+
+    const SIGNAL_SHORT = {
+      procesos: 'Procesos',
+      puntos_ia: 'Puntos IA',
+      adiestramiento: 'Adiestramiento',
+      gobernanza: 'Gobernanza'
+    };
+
+    const SIGNAL_ORDER = ['procesos', 'puntos_ia', 'adiestramiento', 'gobernanza'];
+
+    /* ============================================================
+       RESULT CONTENT (3 niveles)
+       ============================================================ */
+    const RESULTS_CONTENT = {
+      ROJO: {
+        headline: 'Estás en zona roja.',
+        message: 'Tu empresa tiene IA. La mayoría la tiene. Lo que no tiene es estrategia. Probablemente están pagando licencias que nadie usa bien, sin política formal, sin medición, y con riesgos creciendo bajo el radar. No es excepcional. Es donde está el 60% de las empresas en Puerto Rico hoy. La buena noticia: empezar bien ahora cuesta 5x menos que empezar bien dentro de 24 meses.',
+        actions: [
+          {
+            title: 'Inventario de IA',
+            desc: 'No puedes gobernar lo que no ves. La mayoría de empresas tiene de 5 a 10 veces más herramientas de IA en uso de lo que TI sospecha. Eso es tu shadow AI.',
+            steps: [
+              'Envía un formulario corto de 3 preguntas a todo el equipo: ¿qué herramientas de IA usas?, ¿para qué?, ¿es cuenta personal o de la empresa?',
+              'Pídele a TI un export de las apps SaaS aprobadas y de las extensiones del browser instaladas en la flota.',
+              'Cruza ambas listas. Lo que aparece en el formulario y no en TI es shadow AI.',
+              'Clasifica cada herramienta en 3 categorías: Aprobada (lista oficial), Tolerada (revisión pendiente), Prohibida (riesgo de datos).',
+              'Documenta el inventario en una hoja viva con fecha de última revisión y dueño asignado.'
+            ],
+            firstStep: 'Lanza el formulario al equipo en los próximos 7 días.'
+          },
+          {
+            title: 'Mapear 1 proceso clave',
+            desc: 'Sin proceso visible no hay punto donde insertar IA. Empieza con UNO solo. El que más tiempo le quita al equipo.',
+            steps: [
+              'Elige el proceso más pesado del día a día: ventas, onboarding, reporting, soporte, o el que el equipo más se queja.',
+              'Reúne a 3 o 5 personas que lo ejecutan en una sesión de 90 minutos (Miro, Lucid o pizarra).',
+              'Dibuja el flujo paso a paso, sin saltarte nada. Incluyendo los "pequeños detalles".',
+              'Marca cada paso: ¿es manual?, ¿toma tiempo?, ¿genera fricción?, ¿depende de información en otra parte?',
+              'Identifica los 3 pasos donde IA puede ayudar: clasificar, resumir, generar borradores, buscar información, o validar inputs.'
+            ],
+            firstStep: 'Agenda la sesión de mapeo esta semana, mientras el equipo recuerda los detalles.'
+          },
+          {
+            title: 'Borrador de política de IA',
+            desc: 'La política no es para frenar al equipo. Es para liberarlos de adivinar qué es seguro. Una página, firmada, comunicada.',
+            steps: [
+              'Cubre mínimo 5 áreas: datos sensibles, herramientas aprobadas, propiedad intelectual, supervisión humana, y reporte de incidentes.',
+              'Una página máximo. Si pasa de una página, nadie la lee.',
+              'Pásala por legal y RRHH antes de firmar. Su buy-in evita pelea después.',
+              'Comunícala al equipo en una sesión de 30 minutos en vivo. Por email se ignora.',
+              'Define cadencia de revisión cada 90 días con dueño nombrado.'
+            ],
+            firstStep: 'Redacta el primer borrador esta semana. Firmada antes del 30 de junio.'
+          }
+        ],
+        nextStep: 'Una conversación de 30 minutos con PRC Services Corporation. Llevan 50+ años acompañando empresas en Puerto Rico. Esto no se arranca en aislamiento, y tu primera decisión (qué inventariar, qué priorizar, dónde firmar) marca los próximos 24 meses.'
+      },
+      AMARILLO: {
+        headline: 'Vas en proceso, pero sin acelerador.',
+        message: 'Tienes algunas piezas en su lugar. Quizás procesos documentados, alguna iniciativa de training, o uso real de IA en tu operación. Pero las piezas no están conectadas. El riesgo aquí es que el momentum se pierda: el equipo que arrancó con energía se enfría, los pilotos no escalan, y el ROI nunca llega. Tu reto no es empezar. Es decidir dónde poner el siguiente dólar de inversión.',
+        actions: [
+          {
+            title: 'Escala 1 piloto a producción',
+            desc: 'Pilotos eternos matan el momentum. Decide cuál sube, cuál muere, cuál se re-define.',
+            steps: [
+              'Lista todos los pilotos de IA activos hoy en la empresa, incluso los informales.',
+              'Para cada uno define 3 KPIs medibles: ahorro de tiempo (horas/semana), calidad del output (% revisión necesaria) y adopción real (% del equipo que lo usa).',
+              'Mide los 3 KPIs en los últimos 30 días con datos reales, no percepción.',
+              'El piloto que esté arriba en los 3 KPIs sube a producción con dueño formal, SLA y presupuesto.',
+              'Los demás: kill o re-scope con plazo de 30 días. No los dejes en limbo consumiendo licencias.'
+            ],
+            firstStep: 'Lista los pilotos activos en una hoja de cálculo en los próximos 3 días.'
+          },
+          {
+            title: 'Audita tu política de IA',
+            desc: 'Tener política firmada no significa que esté viva. Verifica que sigue siendo relevante y que el equipo la conoce.',
+            steps: [
+              '¿Cuándo fue la última actualización? Si pasaron más de 6 meses, ya está desactualizada. El panorama de IA cambia cada trimestre.',
+              'Pregunta al equipo (encuesta anónima de 1 pregunta): ¿has leído la política? La respuesta sincera revela el problema.',
+              'Asigna dueño con nombre y apellido. Si no hay dueño, nadie la actualiza.',
+              'Crea un canal directo de reporte de incidentes (Slack channel privado o formulario interno).',
+              'Establece revisión obligatoria cada 90 días en el calendario corporativo.'
+            ],
+            firstStep: 'Agenda la auditoría con el dueño actual (o nombra uno) esta semana.'
+          },
+          {
+            title: 'Mide la adopción real de tu equipo',
+            desc: 'Tener licencias no es adopción. Tener loguins no es uso. Define qué cuenta como "uso real" y mídelo.',
+            steps: [
+              'Define qué cuenta como uso real: ej. mínimo 5 prompts por semana, no solo loguearse una vez.',
+              'Cruza datos de las plataformas (Microsoft Copilot, ChatGPT Enterprise y Gemini ya tienen analytics de uso por usuario).',
+              'Encuesta mensual de 5 preguntas al equipo: frecuencia, herramientas favoritas, valor percibido, fricciones, casos de uso nuevos.',
+              'Identifica a tus "campeones internos": los que más usan y mejor explican. Esos son tus multiplicadores.',
+              'Identifica a los rezagados. Pueden necesitar adiestramiento, reasignación de licencia, o no son el rol indicado.'
+            ],
+            firstStep: 'Saca el reporte de adopción de tus plataformas hoy mismo.'
+          }
+        ],
+        nextStep: 'Acompañamiento externo que conecte los puntos que ya tienes. PRC Services Corporation te puede ayudar a pasar de "tener iniciativas" a "tener un sistema", con la infraestructura, seguridad y operación que ya manejan para empresas como la tuya.'
+      },
+      VERDE: {
+        headline: 'Vas adelantado. Ahora toca escalar.',
+        message: 'Estás dentro del top 5 a 10% de empresas en Puerto Rico en madurez de IA. Eso es real. Felicidades. La pregunta ya no es "si" o "cuándo", es "cómo escalar sin romper nada". En este nivel, los riesgos cambian: gobernanza avanzada, costos de orquestación, dependencias entre agentes, y compliance pre-EU AI Act (que aplica el 2 de agosto). Tu trabajo ahora es proteger la ventaja que ya tienes.',
+        actions: [
+          {
+            title: 'Audita tu compliance pre-EU AI Act',
+            desc: 'Aplica el 2 de agosto. Si tienes operación en EU, procesas datos de ciudadanos EU, o vendes productos con IA en EU, te toca. Sin importar dónde esté tu HQ.',
+            steps: [
+              'Inventaría todos tus sistemas de IA y clasifícalos según el AI Act: prohibido, alto riesgo, riesgo limitado, o riesgo mínimo.',
+              'Para los de alto riesgo: prepara documentación técnica, sistema de gestión de calidad, supervisión humana documentada, y registro de logs.',
+              'Crea un AI Bill of Materials (AI BOM): qué modelos usas, con qué data fueron entrenados, qué dependencias críticas, y qué proveedores.',
+              'Designa un AI Officer interno. La persona responsable ante regulador, cliente y board.',
+              'Programa auditoría anual con tercero independiente (consultora especializada o legal con AI practice).'
+            ],
+            firstStep: 'Empieza por la clasificación de sistemas. Antes del 30 de mayo, no del 2 de agosto.'
+          },
+          {
+            title: 'Implementa medición continua',
+            desc: 'A este nivel, lo que no se mide se pierde. Los costos de IA escalan rápido si nadie mira.',
+            steps: [
+              'Define 4 KPIs no negociables: % adopción semanal, ahorro de horas/mes, NPS interno de IA, tasa de incidentes/errores.',
+              'Construye un dashboard único (Looker, Power BI o Tableau) que se revise semanalmente. Que no viva en una carpeta.',
+              'Reporta a C-Suite mensualmente, en 1 página: qué subió, qué bajó, qué decidir.',
+              'Reporta a board trimestralmente, en 3 slides: ROI acumulado, riesgos abiertos, próximas inversiones.',
+              'Política de "métrica o muere": cualquier herramienta sin datos de uso en 30 días se revisa o se cancela.'
+            ],
+            firstStep: 'Define los 4 KPIs y asigna un dueño esta misma semana.'
+          },
+          {
+            title: 'Mueve de asistencia a automatización con agentes',
+            desc: 'El siguiente nivel no es asistir al humano. Es delegar decisiones de bajo riesgo a agentes con supervisión.',
+            steps: [
+              'Lista procesos candidatos: alto volumen + decisiones repetitivas + datos estructurados (ej. clasificación de tickets, ruteo, validación de formularios).',
+              'Para cada candidato define el nivel de autonomía: humano-en-el-loop, supervisión post-hoc, o autónomo con auditoría.',
+              'Empieza con un agente que tome decisiones de bajo riesgo: clasificación o ruteo. No decisiones financieras o de cliente final.',
+              'Mide accuracy y tiempo ahorrado por 30 días antes de subir el nivel de autonomía.',
+              'Diseña siempre plan de rollback: cómo apagas al agente, cómo el humano retoma, y cómo notificas al cliente si algo falla.'
+            ],
+            firstStep: 'Identifica el primer proceso candidato y haz el ejercicio de niveles de autonomía esta semana.'
+          }
+        ],
+        nextStep: 'Implementación avanzada y advisory ongoing. PRC Services Corporation tiene la experiencia en infraestructura, seguridad y compliance que necesitas para escalar a este nivel sin romper lo que ya construiste, con la red de partners (Microsoft, AWS, Fortinet, Veeam) que un programa serio de IA exige.'
+      }
+    };
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+    const state = {
+      screen: 'landing',
+      currentQ: 0,
+      answers: new Array(QUESTIONS.length).fill(null), // points por pregunta
+      user: { nombre: '', email: '', empresa: '', rol: '' },
+      result: null
+    };
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    function showScreen(name) {
+      state.screen = name;
+      $$('.screen').forEach(s => s.classList.remove('is-active'));
+      $('#screen-' + name).classList.add('is-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function calculateScore() {
+      const raw = state.answers.reduce((sum, p) => sum + (p ?? 0), 0);
+      const normalized = Math.round((raw / 36) * 100);
+      const level = normalized <= 40 ? 'ROJO' : normalized <= 70 ? 'AMARILLO' : 'VERDE';
+
+      const signalScores = {};
+      SIGNAL_ORDER.forEach(signal => {
+        const sigQs = QUESTIONS.filter(q => q.signal === signal);
+        const sigPts = sigQs.reduce((sum, q) => sum + (state.answers[q.id - 1] ?? 0), 0);
+        signalScores[signal] = Math.round((sigPts / 9) * 100);
+      });
+
+      const weakest = SIGNAL_ORDER.reduce((min, s) => signalScores[s] < signalScores[min] ? s : min, SIGNAL_ORDER[0]);
+
+      return { raw, normalized, level, signals: signalScores, weakest };
+    }
+
+    /* ============================================================
+       QUIZ RENDER
+       ============================================================ */
+    function renderQuestion() {
+      const q = QUESTIONS[state.currentQ];
+      const total = QUESTIONS.length;
+
+      $('#questionCounter').textContent = `Pregunta ${state.currentQ + 1} de ${total}`;
+      $('#signalPill').textContent = SIGNAL_NAMES[q.signal];
+      $('#progressBar').style.width = `${((state.currentQ + 1) / total) * 100}%`;
+      $('#topbarProgress').textContent = `${state.currentQ + 1} / ${total}`;
+      $('#questionText').textContent = q.text;
+
+      const optsHtml = q.options.map((opt, i) => {
+        const isSelected = state.answers[state.currentQ] === opt.points;
+        return `
+          <button type="button" class="option ${isSelected ? 'is-selected' : ''}" data-points="${opt.points}" data-index="${i}">
+            <span class="option__radio"></span>
+            <span class="option__text">${opt.text}</span>
+          </button>
+        `;
+      }).join('');
+      $('#optionsContainer').innerHTML = optsHtml;
+
+      $$('#optionsContainer .option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const points = parseInt(btn.dataset.points, 10);
+          state.answers[state.currentQ] = points;
+          $$('#optionsContainer .option').forEach(b => b.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+          $('#nextBtn').disabled = false;
+        });
+      });
+
+      $('#backBtn').disabled = state.currentQ === 0;
+      $('#nextBtn').disabled = state.answers[state.currentQ] === null;
+      $('#nextBtnLabel').textContent = state.currentQ === total - 1 ? 'Continuar' : 'Siguiente';
+    }
+
+    function nextQuestion() {
+      if (state.answers[state.currentQ] === null) return;
+      if (state.currentQ < QUESTIONS.length - 1) {
+        state.currentQ++;
+        renderQuestion();
+      } else {
+        showScreen('form');
+        $('#topbarProgress').textContent = 'Casi listo';
+      }
+    }
+
+    function prevQuestion() {
+      if (state.currentQ > 0) {
+        state.currentQ--;
+        renderQuestion();
+      }
+    }
+
+    /* ============================================================
+       FORM
+       ============================================================ */
+    function validateForm() {
+      const fields = ['nombre', 'email', 'empresa', 'rol'];
+      let valid = true;
+      fields.forEach(f => {
+        const el = $('#' + f);
+        const wrap = $(`[data-field="${f}"]`);
+        const val = el.value.trim();
+        let fieldOk = val.length >= 2;
+        if (f === 'email') {
+          fieldOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        }
+        if (!fieldOk) {
+          wrap.classList.add('is-error');
+          valid = false;
+        } else {
+          wrap.classList.remove('is-error');
+          state.user[f] = val;
+        }
+      });
+      return valid;
+    }
+
+    async function submitForm(e) {
+      e.preventDefault();
+      $('#submitError').classList.remove('is-visible');
+
+      if (!validateForm()) return;
+
+      const submitBtn = $('#submitBtn');
+      const submitLabel = $('#submitBtnLabel');
+      submitBtn.disabled = true;
+      submitLabel.innerHTML = '<span class="spinner"></span> Enviando...';
+
+      const result = calculateScore();
+      state.result = result;
+
+      // Pre-render actions HTML for the email (Make just injects this)
+      const content = RESULTS_CONTENT[result.level];
+      const levelColor =
+        result.level === 'ROJO' ? '#DC2626' :
+        result.level === 'AMARILLO' ? '#F59E0B' : '#10B981';
+      const levelLabel =
+        result.level === 'ROJO' ? 'Zona Roja' :
+        result.level === 'AMARILLO' ? 'Zona Amarilla' : 'Zona Verde';
+
+      const actionsHtml = content.actions.map((a, i) => `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:22px; border-radius:12px; overflow:hidden; border:1px solid #E2E8F0; background:#FFFFFF;">
+          <tr>
+            <td class="action-banner" style="background:linear-gradient(135deg,#072BDE 0%,#1E90FF 100%); padding:18px 22px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td valign="middle" style="width:46px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                      <tr>
+                        <td align="center" valign="middle" style="background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.5); border-radius:50%; width:38px; height:38px; color:#FFFFFF; font-weight:800; font-size:15px; font-family:Helvetica,Arial,sans-serif;">0${i + 1}</td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td valign="middle" style="padding-left:14px;">
+                    <div style="font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:3px;">Acción ${i + 1} de 3</div>
+                    <div class="action-title" style="font-size:17px; font-weight:700; color:#FFFFFF; letter-spacing:-0.01em; line-height:1.25;">${a.title}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="action-body" style="padding:22px;">
+              <div class="action-desc" style="font-size:14px; color:#475569; line-height:1.6; margin-bottom:20px;">${a.desc}</div>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:14px;">
+                <tr>
+                  <td style="border-left:3px solid #1E90FF; padding-left:10px;">
+                    <span style="font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:#1E90FF;">Cómo ejecutarlo</span>
+                  </td>
+                </tr>
+              </table>
+              <ol class="action-steps" style="margin:0 0 22px 0; padding-left:24px; color:#334155; font-size:13.5px; line-height:1.7;">
+                ${a.steps.map(s => `<li style="margin-bottom:6px;">${s}</li>`).join('')}
+              </ol>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td class="action-firststep" style="background:linear-gradient(90deg, rgba(16,185,129,0.10) 0%, rgba(16,185,129,0.02) 100%); border-left:4px solid #10B981; border-radius:6px; padding:14px 16px;">
+                    <div style="font-size:10px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:#059669; margin-bottom:4px;">▶ Primer paso esta semana</div>
+                    <div class="firststep-text" style="font-size:14px; color:#0F172A; font-weight:500; line-height:1.5;">${a.firstStep}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      `).join('');
+
+      // Score ring math for the email (SVG with stroke-dasharray)
+      // Circle radius = 76, circumference = 2π × 76 ≈ 477.52
+      const SCORE_RING_CIRC = 477.52;
+      const scoreDashOffset = (SCORE_RING_CIRC * (100 - result.normalized) / 100).toFixed(2);
+
+      const payload = {
+        // Lead info
+        nombre: state.user.nombre,
+        email: state.user.email,
+        empresa: state.user.empresa,
+        rol: state.user.rol,
+        consent: $('#consent').checked,
+
+        // Score data
+        score: result.normalized,
+        rawScore: result.raw,
+        level: result.level,
+        levelLabel: levelLabel,
+        levelColor: levelColor,
+        scoreDashOffset: scoreDashOffset,
+        scoreDashArray: SCORE_RING_CIRC.toFixed(2),
+
+        // Signals (numeric)
+        signal_procesos: result.signals.procesos,
+        signal_puntos_ia: result.signals.puntos_ia,
+        signal_adiestramiento: result.signals.adiestramiento,
+        signal_gobernanza: result.signals.gobernanza,
+
+        // Weakest signal info
+        weakestSignal: result.weakest,
+        weakestSignalLabel: SIGNAL_NAMES[result.weakest],
+
+        // Pre-rendered content (for email template)
+        resultHeadline: content.headline,
+        resultMessage: content.message,
+        resultNextStep: content.nextStep,
+        actionsHtml: actionsHtml,
+
+        // CTA links + logo for email
+        calendlyUrl: window.QUIZ_CONFIG.calendlyUrl,
+        logoUrl: window.QUIZ_CONFIG.logoUrl,
+
+        // Raw answers + meta
+        answers: state.answers,
+        source: window.QUIZ_CONFIG.source,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+
+      // Enviar al endpoint si está configurado
+      try {
+        if (window.QUIZ_CONFIG.endpoint) {
+          await fetch(window.QUIZ_CONFIG.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          // Modo demo: log a consola
+          console.log('[Quiz Demo] Payload (configurar endpoint en QUIZ_CONFIG.endpoint):', payload);
+        }
+        renderResults(result);
+        showScreen('results');
+        $('#topbarProgress').textContent = '✓ Listo';
+      } catch (err) {
+        console.error(err);
+        $('#submitError').classList.add('is-visible');
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'Ver mi resultado';
+      }
+    }
+
+    /* ============================================================
+       RESULTS RENDER
+       ============================================================ */
+    function renderResults(result) {
+      const content = RESULTS_CONTENT[result.level];
+
+      // Score animation
+      const fill = $('#scoreFill');
+      const circumference = 2 * Math.PI * 90;
+      fill.setAttribute('stroke-dasharray', circumference);
+      fill.setAttribute('stroke-dashoffset', circumference);
+
+      // Level badge color (re-tint stroke gradient if needed)
+      const badge = $('#levelBadge');
+      badge.className = 'level-badge';
+      const levelClass = 'level-' + result.level.toLowerCase();
+      badge.classList.add(levelClass);
+      $('#levelText').textContent = `NIVEL ${result.level}`;
+
+      // Score number animation
+      const scoreEl = $('#scoreNumber');
+      let current = 0;
+      const target = result.normalized;
+      const duration = 1400;
+      const startTime = performance.now();
+      function animateScore(now) {
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        scoreEl.textContent = Math.round(eased * target);
+        if (t < 1) requestAnimationFrame(animateScore);
+        else scoreEl.textContent = target;
+      }
+      requestAnimationFrame(animateScore);
+
+      // Score ring fill
+      setTimeout(() => {
+        const offset = circumference - (target / 100) * circumference;
+        fill.setAttribute('stroke-dashoffset', offset);
+      }, 100);
+
+      // Headline + message
+      $('#resultsHeadline').textContent = content.headline;
+      $('#resultsMessage').textContent = content.message;
+
+      // Signals breakdown
+      const signalsHtml = SIGNAL_ORDER.map(signal => {
+        const score = result.signals[signal];
+        const isWeakest = signal === result.weakest;
+        const colorClass =
+          score <= 40 ? 'signal__bar-fill--rojo' :
+          score <= 70 ? 'signal__bar-fill--amarillo' :
+          'signal__bar-fill--verde';
+        return `
+          <div class="signal ${isWeakest ? 'is-weakest' : ''}">
+            <div class="signal__head">
+              <div class="signal__name">
+                ${SIGNAL_NAMES[signal]}
+                ${isWeakest ? '<span class="signal__weak-tag">Tu eslabón más débil</span>' : ''}
+              </div>
+              <div class="signal__score">${score}<span>/100</span></div>
+            </div>
+            <div class="signal__bar">
+              <div class="signal__bar-fill ${colorClass}" style="width: 0%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      $('#signalsContainer').innerHTML = signalsHtml;
+
+      // Animate signal bars
+      setTimeout(() => {
+        $$('#signalsContainer .signal__bar-fill').forEach((bar, i) => {
+          const signal = SIGNAL_ORDER[i];
+          bar.style.width = result.signals[signal] + '%';
+        });
+      }, 300);
+
+      // Actions
+      const actionsHtml = content.actions.map((action, i) => {
+        const stepsHtml = (action.steps || []).map(s => `<li>${s}</li>`).join('');
+        return `
+        <li class="action">
+          <div class="action__num">${i + 1}</div>
+          <div class="action__body">
+            <div class="action__title">${action.title}</div>
+            <div class="action__desc">${action.desc}</div>
+            ${stepsHtml ? `
+              <div class="action__steps-label">Cómo ejecutarlo</div>
+              <ol class="action__steps">${stepsHtml}</ol>
+            ` : ''}
+            ${action.firstStep ? `
+              <div class="action__first">
+                <span class="action__first-label">Primer paso</span>
+                <span>${action.firstStep}</span>
+              </div>
+            ` : ''}
+          </div>
+        </li>
+        `;
+      }).join('');
+      $('#actionsList').innerHTML = actionsHtml;
+
+      // Next step
+      $('#nextStepDesc').textContent = content.nextStep;
+      $('#calendlyBtn').href = window.QUIZ_CONFIG.calendlyUrl;
+    }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#startBtn').addEventListener('click', () => {
+        showScreen('quiz');
+        renderQuestion();
+      });
+
+      $('#nextBtn').addEventListener('click', nextQuestion);
+      $('#backBtn').addEventListener('click', prevQuestion);
+      $('#leadForm').addEventListener('submit', submitForm);
+
+      // Atajo de teclado: 1-4 para seleccionar opción en el quiz
+      document.addEventListener('keydown', (e) => {
+        if (state.screen !== 'quiz') return;
+        const num = parseInt(e.key, 10);
+        if (num >= 1 && num <= 4) {
+          const opts = $$('#optionsContainer .option');
+          if (opts[num - 1]) opts[num - 1].click();
+        } else if (e.key === 'Enter' && !$('#nextBtn').disabled) {
+          nextQuestion();
+        } else if (e.key === 'ArrowLeft' && !$('#backBtn').disabled) {
+          prevQuestion();
+        }
+      });
+
+      // Quitar errores al escribir
+      $$('.field__input').forEach(input => {
+        input.addEventListener('input', () => {
+          input.closest('.field').classList.remove('is-error');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
