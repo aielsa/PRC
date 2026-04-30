@@ -1507,6 +1507,12 @@
             <div class="field__error">¿Cuál es tu rol en la empresa?</div>
           </div>
 
+          <div class="field" data-field="telefono">
+            <label class="field__label" for="telefono">Número de teléfono</label>
+            <input class="field__input" type="tel" id="telefono" name="telefono" placeholder="Ej. (787) 555-1234" autocomplete="tel" required>
+            <div class="field__error">Por favor, escribe un número de teléfono válido.</div>
+          </div>
+
           <label class="form__consent">
             <input type="checkbox" id="consent" checked>
             <span>Acepto recibir mi diagnóstico y recursos relacionados de PRC Services Corporation. Puedes darte de baja en cualquier momento.</span>
@@ -1605,9 +1611,6 @@
     window.QUIZ_CONFIG = {
       // Endpoint que recibe el lead. Make.com webhook conectado a Outlook + Sheets.
       endpoint: 'https://hook.us1.make.com/k1d2l7d648rg2p2gwxv0q3w84lwgoq48',
-
-      // Link de Calendly para "Agenda tu sesión de diagnóstico gratis"
-      calendlyUrl: 'https://calendly.com/elsadelpino/diagnostico-prc',
 
       // URL pública del logo PRC blanco (cambiar después del deploy a tu dominio real)
       // Ej: 'https://realitycheck.elsadelpino.com/assets/logo-prc-white.png'
@@ -1869,7 +1872,7 @@
       screen: 'landing',
       currentQ: 0,
       answers: new Array(QUESTIONS.length).fill(null), // points por pregunta
-      user: { nombre: '', email: '', empresa: '', rol: '' },
+      user: { nombre: '', email: '', empresa: '', rol: '', telefono: '' },
       result: null
     };
 
@@ -1964,7 +1967,7 @@
        FORM
        ============================================================ */
     function validateForm() {
-      const fields = ['nombre', 'email', 'empresa', 'rol'];
+      const fields = ['nombre', 'email', 'empresa', 'rol', 'telefono'];
       let valid = true;
       fields.forEach(f => {
         const el = $('#' + f);
@@ -1973,6 +1976,10 @@
         let fieldOk = val.length >= 2;
         if (f === 'email') {
           fieldOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        }
+        if (f === 'telefono') {
+          const digits = val.replace(/\D/g, '');
+          fieldOk = digits.length >= 7;
         }
         if (!fieldOk) {
           wrap.classList.add('is-error');
@@ -2066,6 +2073,7 @@
         email: state.user.email,
         empresa: state.user.empresa,
         rol: state.user.rol,
+        telefono: state.user.telefono,
         consent: $('#consent').checked,
 
         // Score data
@@ -2093,8 +2101,7 @@
         resultNextStep: content.nextStep,
         actionsHtml: actionsHtml,
 
-        // CTA links + logo for email
-        calendlyUrl: window.QUIZ_CONFIG.calendlyUrl,
+        // Logo for email
         logoUrl: window.QUIZ_CONFIG.logoUrl,
 
         // Raw answers + meta
